@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Александр Морозов - Писатель</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5f1e8 0%, #e8dfd2 100%);
+            min-height: 100vh;
+            color: #3a3a3a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Главная страница */
+        .main-page {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .author-section {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .author-image {
+            flex: 0 0 350px;
+            height: 450px;
+            background: linear-gradient(135deg, #8B7355 0%, #5a4a3a 100%);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .author-image::before {
+            content: "📷";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            opacity: 0.3;
+        }
+
+        .author-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .author-info h1 {
+            font-size: 48px;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .author-info h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: #8B7355;
+        }
+
+        .author-bio {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #5a5a5a;
+            margin-top: 20px;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: #8B7355;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            background: #6a5a45;
+        }
+
+        /* Секция книг */
+        .books-section {
+            margin-top: 40px;
+        }
+
+        .books-section h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #2c2c2c;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .book-cover {
+            height: 350px;
+            background: linear-gradient(135deg, #a8937a 0%, #6a5a4a 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .book-info {
+            padding: 20px;
+        }
+
+        .book-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c2c2c;
+        }
+
+        .book-year {
+            color: #8B7355;
+            font-size: 14px;
+        }
+
+        /* Страница книги */
+        .book-page {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .book-page.active {
+            display: block;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #8B7355;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #6a5a45;
+        }
+
+        .book-detail {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .book-detail-header {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .book-detail-cover {
+            flex: 0 0 300px;
+            height: 450px;
+            background: linear-gradient(135deg, #a8937a 0%, #6a5a4a 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .book-detail-info {
+            flex: 1;
+        }
+
+        .book-detail-title {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #2c2c2c;
+        }
+
+        .book-meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            color: #6a6a6a;
+        }
+
+        .book-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #5a5a5a;
+        }
+
+        .buy-button {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #8B7355 0%, #6a5a45 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .buy-button:hover {
+            transform: scale(1.05);
+        }
+
+        .reviews-section {
+            margin-top: 50px;
+        }
+
+        .reviews-section h3 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #2c2c2c;
+        }
+
+        .review {
+            background: #f9f7f4;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .review-author {
+            font-weight: bold;
+            color: #8B7355;
+            margin-bottom: 10px;
+        }
+
+        .review-text {
+            line-height: 1.6;
+            color: #5a5a5a;
+        }
+
+        .stars {
+            color: #ffa500;
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .author-section {
+                flex-direction: column;
+            }
+
+            .author-image {
+                flex: none;
+                width: 100%;
+                height: 300px;
+            }
+
+            .author-info h1 {
+                font-size: 32px;
+            }
+
+            .book-detail-header {
+                flex-direction: column;
+            }
+
+            .book-detail-cover {
+                flex: none;
+                width: 100%;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Главная страница -->
+        <div id="mainPage" class="main-page">
+            <div class="author-section">
+                <div class="author-image"></div>
+                <div class="author-info">
+                    <h1>Александр Морозов</h1>
+                    <p class="author-bio">
+                        Современный российский писатель, мастер психологической прозы и философской фантастики. 
+                        Лауреат множества литературных премий. В своих произведениях исследует границы человеческого 
+                        сознания, природу времени и парадоксы современного общества. Каждая новая книга становится 
+                        событием в литературном мире и находит отклик у читателей разных поколений.
+                    </p>
+                    <div class="social-links">
+                        <a href="#">📧</a>
+                        <a href="#">📱</a>
+                        <a href="#">📚</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="books-section">
+                <h2>Мои книги</h2>
+                <div class="books-grid">
+                    <div class="book-card" onclick="showBook('echoes')">
+                        <div class="book-cover">🌌</div>
+                        <div class="book-info">
+                            <div class="book-title">Эхо забытых миров</div>
+                            <div class="book-year">2023</div>
+                        </div>
+                    </div>
+                    <div class="book-card" onclick="showBook('shadows')">
+                        <div class="book-cover">🌙</div>
+                        <div class="book-info">
+                            <div class="book-title">Тени на стекле</div>
+                            <div class="book-year">2022</div>
+                        </div>
+                    </div>
+                    <div class="book-card" onclick="showBook('bridges')">
+                        <div class="book-cover">🌉</div>
+                        <div class="book-info">
+                            <div class="book-title">Мосты сознания</div>
+                            <div class="book-year">2021</div>
+                        </div>
+                    </div>
+                    <div class="book-card" onclick="showBook('chronicle')">
+                        <div class="book-cover">⏳</div>
+                        <div class="book-info">
+                            <div class="book-title">Хроники параллели</div>
+                            <div class="book-year">2020</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Страницы книг -->
+        <div id="bookPage" class="book-page">
+            <button class="back-button" onclick="showMain()">← Вернуться к книгам</button>
+            <div class="book-detail">
+                <div class="book-detail-header">
+                    <div class="book-detail-cover" id="bookCover"></div>
+                    <div class="book-detail-info">
+                        <h1 class="book-detail-title" id="bookTitle"></h1>
+                        <div class="book-meta">
+                            <span id="bookYear"></span>
+                            <span id="bookPages"></span>
+                            <span id="bookGenre"></span>
+                        </div>
+                        <p class="book-description" id="bookDescription"></p>
+                        <button class="buy-button">Купить книгу</button>
+                    </div>
+                </div>
+                <div class="reviews-section">
+                    <h3>Отзывы читателей</h3>
+                    <div id="bookReviews"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const booksData = {
+            echoes: {
+                title: 'Эхо забытых миров',
+                icon: '🌌',
+                year: '2023',
+                pages: '512 страниц',
+                genre: 'Фантастика',
+                description: 'Роман о путешествии через параллельные вселенные, где каждое решение создает новую реальность. Главный герой, физик-теоретик, случайно открывает способ перемещения между мирами и обнаруживает, что его альтернативные версии пытаются предотвратить космическую катастрофу. Философское размышление о природе выбора и ответственности.',
+                reviews: [
+                    {
+                        author: 'Мария Петрова',
+                        text: 'Невероятная книга! Автор мастерски переплетает научные теории с глубокими философскими вопросами. Читается на одном дыхании.',
+                        stars: '★★★★★'
+                    },
+                    {
+                        author: 'Игорь Смирнов',
+                        text: 'Одна из лучших фантастических книг последних лет. Заставляет задуматься о каждом принятом решении в жизни.',
+                        stars: '★★★★★'
+                    }
+                ]
+            },
+            shadows: {
+                title: 'Тени на стекле',
+                icon: '🌙',
+                year: '2022',
+                pages: '384 страницы',
+                genre: 'Психологический триллер',
+                description: 'Мрачная история о художнице, которая начинает видеть в отражениях окон чужие воспоминания. Расследуя природу своих видений, она погружается в тайну исчезновения людей в своем городе. Атмосферный триллер о границах между реальностью и воображением.',
+                reviews: [
+                    {
+                        author: 'Елена Волкова',
+                        text: 'Атмосфера книги держит в напряжении до последней страницы. Морозов создал уникальный мир, полный загадок.',
+                        stars: '★★★★☆'
+                    },
+                    {
+                        author: 'Андрей Козлов',
+                        text: 'Психологически точно и пугающе реалистично. Эта книга не отпускает даже после прочтения.',
+                        stars: '★★★★★'
+                    }
+                ]
+            },
+            bridges: {
+                title: 'Мосты сознания',
+                icon: '🌉',
+                year: '2021',
+                pages: '448 страниц',
+                genre: 'Философская проза',
+                description: 'Роман-исследование о нейробиологе, разрабатывающем технологию передачи сознания. История о том, что делает нас людьми - наши воспоминания, тело или что-то большее. Глубокое погружение в вопросы идентичности и природы человеческого "я".',
+                reviews: [
+                    {
+                        author: 'Ольга Никитина',
+                        text: 'Морозов поднимает вопросы, которые не дают покоя современной науке. Блестящее сочетание научной достоверности и художественного вымысла.',
+                        stars: '★★★★★'
+                    },
+                    {
+                        author: 'Виктор Лебедев',
+                        text: 'Книга, которая меняет представление о сознании. Рекомендую всем, кто интересуется философией и нейронауками.',
+                        stars: '★★★★★'
+                    }
+                ]
+            },
+            chronicle: {
+                title: 'Хроники параллели',
+                icon: '⏳',
+                year: '2020',
+                pages: '576 страниц',
+                genre: 'Научная фантастика',
+                description: 'Эпическая сага о цивилизации, научившейся управлять временем. Когда временные линии начинают схлопываться, группа хрононавтов отправляется в путешествие через эпохи, чтобы найти источник аномалии. Масштабное полотно о цене прогресса и ответственности перед будущим.',
+                reviews: [
+                    {
+                        author: 'Дмитрий Орлов',
+                        text: 'Грандиозная история с продуманным миром и захватывающим сюжетом. Морозов создал новую классику жанра.',
+                        stars: '★★★★★'
+                    },
+                    {
+                        author: 'Анна Соколова',
+                        text: 'Редкий случай, когда научная составляющая не уступает художественной. Книга-открытие!',
+                        stars: '★★★★☆'
+                    }
+                ]
+            }
+        };
+
+        function showBook(bookId) {
+            const book = booksData[bookId];
+            if (!book) return;
+
+            document.getElementById('bookCover').textContent = book.icon;
+            document.getElementById('bookTitle').textContent = book.title;
+            document.getElementById('bookYear').textContent = book.year;
+            document.getElementById('bookPages').textContent = book.pages;
+            document.getElementById('bookGenre').textContent = book.genre;
+            document.getElementById('bookDescription').textContent = book.description;
+
+            const reviewsHtml = book.reviews.map(review => `
+                <div class="review">
+                    <div class="stars">${review.stars}</div>
+                    <div class="review-author">${review.author}</div>
+                    <div class="review-text">${review.text}</div>
+                </div>
+            `).join('');
+            document.getElementById('bookReviews').innerHTML = reviewsHtml;
+
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('bookPage').style.display = 'block';
+            document.getElementById('bookPage').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showMain() {
+            document.getElementById('bookPage').style.display = 'none';
+            document.getElementById('bookPage').classList.remove('active');
+            document.getElementById('mainPage').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
